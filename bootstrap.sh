@@ -21,7 +21,6 @@ cd "$(dirname "${BASH_SOURCE}")"
 if $pull; then
   	echo "Pulling latest"
 	git pull origin main
-  	# Add your sync logic here
 fi
 
 # pre-req, rsync required
