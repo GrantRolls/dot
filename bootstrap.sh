@@ -1,10 +1,35 @@
 #!/usr/bin/env bash
 
+force=false
+pull=false
+
+for arg in "$@"; do
+  case $arg in
+    --force|-f)
+      force=true
+      ;;
+    --pull|-p)
+      pull=true
+      ;;
+  esac
+done
+
 echo "Syncronising dotfiles..."
 
 cd "$(dirname "${BASH_SOURCE}")"
 
-git pull origin main
+if $pull; then
+  	echo "Pulling latest"
+	git pull origin main
+  	# Add your sync logic here
+fi
+
+# pre-req, rsync required
+# Install rsync, if not already installed
+if ! command -v rsync &>/dev/null; then
+	echo "Installing rsync"
+	sudo apt-get install -y rsync
+fi
 
 function doIt() {
 	rsync --exclude ".git/" \
@@ -17,7 +42,7 @@ function doIt() {
 	source ~/.bash_profile
 }
 
-if [ "$1" == "--force" -o "$1" == "-f" ]; then
+if $force; then
 	doIt
 else
 	read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1
@@ -30,13 +55,12 @@ echo "dotfiles have been Syncronising!"
 unset doIt
 
 echo "Installing Packages"
-
 sudo apt-get update
 
 # Install vim, if not already installed
 if ! command -v vim &>/dev/null; then
 	echo "Installing vim"
-	sudo apt-get install vim
+	sudo apt-get install -y vim
 else
 	echo "vim is already installed"
 fi
