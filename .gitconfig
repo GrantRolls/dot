@@ -1,0 +1,16 @@
+[core]
+	editor = vim
+
+[init]
+	defaultBranch = main
+
+[alias]
+	stash = stash --all
+
+[apply]
+	# Detect whitespace errors when applying a patch.
+	whitespace = fix
+
+[branch]
+	# Show most recently changed branches first.
+	sort = -committerdate
