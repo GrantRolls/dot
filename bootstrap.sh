@@ -5,9 +5,6 @@ pull=false
 
 for arg in "$@"; do
   case $arg in
-    --force|-f)
-      force=true
-      ;;
     --pull|-p)
       pull=true
       ;;
@@ -41,19 +38,12 @@ function doIt() {
 	source ~/.bash_profile
 }
 
-if $force; then
-	doIt
-else
-	read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1
-	echo ""
-	if [[ $REPLY =~ ^[Yy]$ ]]; then
-		doIt
-	fi
-fi
+doIt
+
 echo "dotfiles have been Syncronising!"
 unset doIt
 
-echo "Installing Packages"
+echo "Installing Packages"	
 sudo apt-get update
 
 # Install vim, if not already installed
