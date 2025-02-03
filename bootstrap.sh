@@ -6,11 +6,11 @@ force=false
 pull=false
 
 for arg in "$@"; do
-  case $arg in
-    --pull|-p)
-      pull=true
-      ;;
-  esac
+	case $arg in
+	--pull | -p)
+		pull=true
+		;;
+	esac
 done
 
 echo "Syncronising dotfiles..."
@@ -18,31 +18,44 @@ echo "Syncronising dotfiles..."
 cd "$(dirname "${BASH_SOURCE}")"
 
 if $pull; then
-  	echo "Pulling latest"
+	echo "Pulling latest"
 	git pull origin main
 fi
 
+function installDependencies() {
+	echo "Installing Dependencies"
+
+	echo "USER $USER HOME $HOME"
+
+	sudo apt-get update
+    if ! sudo apt-get install -y git rsync; then
+        echo "Failed to install dependencies"
+        exit 1
+    fi
+}
+
 function syncDotfiles() {
-    cp -r --preserve=mode,timestamps \
-        --exclude=".git" \
-        --exclude="bootstrap.sh" \
-        --exclude="README.md" \
-        . $HOME
+	rsync --exclude ".git/" \
+		--exclude ".DS_Store" \
+		--exclude ".osx" \
+		--exclude "bootstrap.sh" \
+		--exclude "README.md" \
+		--exclude "LICENSE-MIT.txt" \
+		-avh --no-perms . $HOME
 	echo "dotfiles have been synced!"
 }
 
 function installPackages() {
-	echo "Installing Packages"	
+	echo "Installing Packages"
 
 	if [ -d "$HOME/.local/bin" ]; then
 		mkdir -p $HOME/.local/bin
 	fi
 
-	sudo apt-get update
 	# Install vim, if not already installed
 	if ! command -v vim &>/dev/null; then
 		echo "Installing vim"
-		sudo apt install -y vim
+		sudo apt-get install -y vim
 	else
 		echo "vim is already installed"
 	fi
@@ -63,12 +76,20 @@ function installPackages() {
 	echo "Packages have been installed!"
 }
 
+function cleanup {
+	apt-get clean && rm -rf /var/lib/apt/lists/*
+}
+
+installDependencies
+
 syncDotfiles
 source $HOME/.bash_profile
 
 installPackages
 source $HOME/.bash_profile
 
-unset syncDotfiles installPackages
+cleanup
 
-echo "Bootstrap Complete"	
+unset installDependencies syncDotfiles installPackages cleanup
+
+echo "Bootstrap Complete"
