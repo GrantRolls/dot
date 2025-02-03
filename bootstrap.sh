@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+USER=$(id -un)
 USER_GROUP=$(id -gn)
 
 force=false
