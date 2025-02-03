@@ -40,7 +40,7 @@ function doIt() {
 
 doIt
 
-echo "dotfiles have been Syncronising!"
+echo "dotfiles have been synced!"
 unset doIt
 
 echo "Installing Packages"	
@@ -66,3 +66,5 @@ if ! command -v lazygit &>/dev/null; then
 else
 	echo "lazygit is already installed"
 fi
+
+echo "Bootstrap Complete"	
