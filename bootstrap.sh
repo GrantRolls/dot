@@ -27,14 +27,18 @@ function syncDotfiles() {
         --exclude=".git" \
         --exclude="bootstrap.sh" \
         --exclude="README.md" \
-        . ~
+        . $HOME
 	echo "dotfiles have been synced!"
 }
 
 function installPackages() {
 	echo "Installing Packages"	
-	sudo apt-get update
 
+	if [ -d "$HOME/.local/bin" ]; then
+		mkdir -p $HOME/.local/bin
+	fi
+
+	sudo apt-get update
 	# Install vim, if not already installed
 	if ! command -v vim &>/dev/null; then
 		echo "Installing vim"
@@ -43,9 +47,6 @@ function installPackages() {
 		echo "vim is already installed"
 	fi
 
-	if [ -d "$HOME/.local/bin" ]; then
-		mkdir -p $HOME/.local/bin
-	fi
 	# Install laygit
 	# https://github.com/jesseduffield/lazygit
 	if ! command -v lazygit &>/dev/null; then
@@ -62,10 +63,11 @@ function installPackages() {
 	echo "Packages have been installed!"
 }
 
-syncDotfiles()
-source ~/.bash_profile
-installPackages()
-source ~/.bash_profile
+syncDotfiles
+source $HOME/.bash_profile
+
+installPackages
+source $HOME/.bash_profile
 
 unset syncDotfiles installPackages
 
