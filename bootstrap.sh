@@ -20,21 +20,12 @@ if $pull; then
 	git pull origin main
 fi
 
-# pre-req, rsync required
-# Install rsync, if not already installed
-if ! command -v rsync &>/dev/null; then
-	echo "Installing rsync"
-	sudo apt-get install -y rsync
-fi
-
 function doIt() {
-	rsync --exclude ".git/" \
-		--exclude ".DS_Store" \
-		--exclude ".osx" \
-		--exclude "bootstrap.sh" \
-		--exclude "README.md" \
-		--exclude "LICENSE-MIT.txt" \
-		-avh --no-perms . ~
+    cp -r --preserve=mode,timestamps \
+        --exclude=".git" \
+        --exclude="bootstrap.sh" \
+        --exclude="README.md" \
+        . ~
 	source ~/.bash_profile
 }
 
@@ -49,7 +40,7 @@ sudo apt-get update
 # Install vim, if not already installed
 if ! command -v vim &>/dev/null; then
 	echo "Installing vim"
-	sudo apt-get install -y vim
+	sudo apt install -y vim
 else
 	echo "vim is already installed"
 fi
