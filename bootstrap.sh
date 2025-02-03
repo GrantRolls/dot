@@ -29,7 +29,7 @@ function installDependencies() {
 	echo "USER $USER HOME $HOME"
 
 	sudo apt-get update
-    if ! sudo apt-get install -y git rsync glibc-langpack-en; then
+    if ! sudo apt-get install -y git rsync; then
         echo "Failed to install dependencies"
         exit 1
     fi

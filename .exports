@@ -12,9 +12,10 @@ export HISTFILESIZE="${HISTSIZE}"
 # Omit duplicates and commands that begin with a space from history.
 export HISTCONTROL='ignoreboth'
 
-# Prefer AU English and use UTF-8.
-export LANG='en_AU.UTF-8'
-export LC_ALL='en_AU.UTF-8'
+# # Prefer AU English and use UTF-8.
+# Note, Will not work for all systems
+# export LANG='en_AU.UTF-8'
+# export LC_ALL='en_AU.UTF-8'
 
 # Highlight section titles in manual pages.
 export LESS_TERMCAP_md="${yellow}"
