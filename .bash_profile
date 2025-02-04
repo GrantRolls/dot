@@ -12,6 +12,9 @@ if [ -f "$HOME/.bashrc" ]; then
     source $HOME/.bashrc
 fi
 
+# Forces USER env set, if not already
+USER=$(id -un)
+
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
