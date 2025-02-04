@@ -3,7 +3,6 @@
 USER=$(id -un)
 USER_GROUP=$(id -gn)
 
-force=false
 pull=false
 
 for arg in "$@"; do
@@ -14,8 +13,6 @@ for arg in "$@"; do
 	esac
 done
 
-echo "Syncronising dotfiles..."
-
 cd "$(dirname "${BASH_SOURCE}")"
 
 if $pull; then
@@ -25,9 +22,6 @@ fi
 
 function installDependencies() {
 	echo "Installing Dependencies"
-
-	echo "USER $USER HOME $HOME"
-
 	sudo apt-get update
 	if ! sudo apt-get install -y git rsync; then
 		echo "Failed to install dependencies"
@@ -36,6 +30,8 @@ function installDependencies() {
 }
 
 function syncDotfiles() {
+	echo "Syncronising dotfiles to $HOME"
+
 	rsync --exclude ".git/" \
 		--exclude ".DS_Store" \
 		--exclude ".osx" \
