@@ -29,10 +29,10 @@ function installDependencies() {
 	echo "USER $USER HOME $HOME"
 
 	sudo apt-get update
-    if ! sudo apt-get install -y git rsync; then
-        echo "Failed to install dependencies"
-        exit 1
-    fi
+	if ! sudo apt-get install -y git rsync; then
+		echo "Failed to install dependencies"
+		exit 1
+	fi
 }
 
 function syncDotfiles() {
@@ -79,7 +79,7 @@ function installPackages() {
 }
 
 function cleanup {
-	apt-get clean && rm -rf /var/lib/apt/lists/*
+	sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
 }
 
 installDependencies
