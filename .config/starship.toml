@@ -1,0 +1,22 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = true
+
+[c]
+disabled = true
+
+[cmake]
+disabled = true
+
+[package]
+disabled = true
+
+[username]
+style_user = "fg:135"
+format = '[$user]($style)'
+
+[hostname]
+ssh_only = true
+style = "fg:209 bg:239"

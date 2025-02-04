@@ -71,6 +71,17 @@ function installPackages() {
 		echo "lazygit is already installed"
 	fi
 
+	# Install starship prompt
+	# https://starship.rs/
+	if ! command -v starship &>/dev/null; then
+		echo "Installing starship"
+		curl -sS https://starship.rs/install.sh -o ss-install.sh
+		sh ss-install.sh --bin-dir $HOME/.local/bin -y
+		rm ss-install.sh
+	else
+		echo "starship is already installed"
+	fi
+
 	echo "Packages have been installed!"
 }
 
