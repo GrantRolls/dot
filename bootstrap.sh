@@ -51,6 +51,7 @@ function installPackages() {
 
 	if [ -d "$HOME/.local/bin" ]; then
 		mkdir -p $HOME/.local/bin
+		sudo chown $USER:$USER_GROUP $HOME/.local/bin
 	fi
 
 	# Install vim, if not already installed
@@ -69,7 +70,7 @@ function installPackages() {
 		LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
 		curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
 		tar xf lazygit.tar.gz lazygit
-		sudo install -o $USER -g $USER_GROUP lazygit -D -t $HOME/.local/bin/
+		install lazygit -D -t $HOME/.local/bin/
 	else
 		echo "lazygit is already installed"
 	fi
