@@ -14,3 +14,7 @@
 [branch]
 	# Show most recently changed branches first.
 	sort = -committerdate
+	
+[user]
+    name = Grant Rolls
+    email = grant.rolls@design-industry.com.au
