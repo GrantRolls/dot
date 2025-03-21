@@ -43,7 +43,7 @@ function syncDotfiles() {
 }
 
 function installPackages() {
-	echo "Installing Packages"
+	echo "🚀 Installing Packages"
 
 	if [ -d "$HOME/.local/bin" ]; then
 		mkdir -p $HOME/.local/bin
@@ -69,6 +69,16 @@ function installPackages() {
 		install lazygit -D -t $HOME/.local/bin/
 	else
 		echo "lazygit is already installed"
+	fi
+
+	# Install lazydocker
+
+	if ! command -v lazydocker &>/dev/null; then
+		echo "Installing lazydocker"
+
+		curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
+	else
+		echo "lazydocker is already installed"
 	fi
 
 	# Install starship prompt
@@ -101,4 +111,4 @@ cleanup
 
 unset installDependencies syncDotfiles installPackages cleanup
 
-echo "Bootstrap Complete"
+echo "💪 Bootstrap Complete"
