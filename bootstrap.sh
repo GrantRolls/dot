@@ -52,7 +52,7 @@ function installPackages() {
 
 	# Install vim, if not already installed
 	if ! command -v vim &>/dev/null; then
-		echo "Installing vim"
+		echo "💻 Installing vim"
 		sudo apt-get install -y vim
 	else
 		echo "vim is already installed"
@@ -61,7 +61,7 @@ function installPackages() {
 	# Install laygit
 	# https://github.com/jesseduffield/lazygit
 	if ! command -v lazygit &>/dev/null; then
-		echo "Installing lazygit"
+		echo "⌨️ Installing lazygit"
 
 		LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
 		curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
@@ -74,7 +74,7 @@ function installPackages() {
 	# Install lazydocker
 
 	if ! command -v lazydocker &>/dev/null; then
-		echo "Installing lazydocker"
+		echo "🐋 Installing lazydocker"
 
 		curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
 	else
@@ -84,7 +84,7 @@ function installPackages() {
 	# Install starship prompt
 	# https://starship.rs/
 	if ! command -v starship &>/dev/null; then
-		echo "Installing starship"
+		echo "🚀 Installing starship"
 		curl -sS https://starship.rs/install.sh -o ss-install.sh
 		sh ss-install.sh --bin-dir $HOME/.local/bin -y
 		rm ss-install.sh
@@ -92,7 +92,23 @@ function installPackages() {
 		echo "starship is already installed"
 	fi
 
-	echo "Packages have been installed!"
+	# Install uv
+	# https://astral.sh/uv/
+	if ! command -v uv &>/dev/null; then
+		echo "🐍 Installing py manager (uv)…"
+
+		curl -LsSf https://astral.sh/uv/install.sh | sh
+	else
+		echo "py manager (uv) is already installed"
+	fi
+
+	uv python install $PY_VERSION
+	echo "🔧 uv using py version $PY_VERSION"
+
+	uv tool install copier
+	echo "🔧 Installed copier (via uv)"
+
+	echo "✅ Packages have been installed!"
 }
 
 function cleanup {
