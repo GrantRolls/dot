@@ -45,9 +45,10 @@ function syncDotfiles() {
 function installPackages() {
 	echo "🚀 Installing Packages"
 
-	if [ -d "$HOME/.local/bin" ]; then
+	if [ ! -d "$HOME/.local/bin" ]; then
 		mkdir -p $HOME/.local/bin
 		sudo chown $USER:$USER_GROUP $HOME/.local/bin
+		echo "💾 Created $HOME/.local/bin"
 	fi
 
 	# Install vim, if not already installed
@@ -101,6 +102,7 @@ function installPackages() {
 	else
 		echo "py manager (uv) is already installed"
 	fi
+	source $HOME/.local/bin/env
 
 	uv python install $PY_VERSION
 	echo "🔧 uv using py version $PY_VERSION"
