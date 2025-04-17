@@ -3,6 +3,20 @@
 [A guide on dotfiles](https://dotfiles.github.io/)
 [Inspired-by and built-upon](https://github.com/mathiasbynens/dotfiles)
 
+```plantuml
+@startuml
+[*] --> CheckArguments : Start
+CheckArguments --> PullLatest : --pull flag provided
+CheckArguments --> InstallDependencies : No pull flag
+PullLatest --> InstallDependencies
+InstallDependencies --> SyncDotfiles
+SyncDotfiles --> SourceBashProfile : Source .bash_profile
+SourceBashProfile --> InstallPackages
+InstallPackages --> Cleanup
+Cleanup --> [*] : Finish
+@enduml
+```
+
 ## Pre-requisites
 
 * git
