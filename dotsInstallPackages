@@ -11,16 +11,13 @@ function dotsInstallPackages() {
 	mkdir -p $HOME/.config && sudo chown $USER $HOME/.config
 	echo "💾 Created $HOME/.config"
 
-	function install_vim() {
-		# Install vim
-		if ! command -v vim &>/dev/null; then
-			echo "💻 Installing vim"
-			sudo apt-get install -y vim
-		else
-			echo "vim is already installed"
-		fi
+	function install_other_packages() {
+		sudo apt-get install -y \
+			iproute2 \
+			vim
 	}
-	install_vim
+	install_other_packages
+
 
 	function install_lazygit() {
 		# Install laygit
