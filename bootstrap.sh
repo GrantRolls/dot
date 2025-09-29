@@ -60,6 +60,28 @@ function syncDotfiles() {
 	echo "dotfiles have been synced!"
 }
 
+function updateGitconfig() {
+	
+PERSONAL_GITCONFIG=".my-gitconfig"
+TARGET_GITCONFIG="$HOME/.gitconfig"
+INCLUDE_LINE="[include]\n\tpath = ~/${PERSONAL_GITCONFIG}"
+
+# Check if .gitconfig exists and if it already includes the personal config
+if [ -f "$TARGET_GITCONFIG" ]; then
+    if ! grep -q "path = ~/my-personal.gitconfig" "$TARGET_GITCONFIG"; then
+        echo -e "\n$INCLUDE_LINE" >> "$TARGET_GITCONFIG"
+        echo "Added include to .gitconfig"
+    else
+        echo "Include already present in .gitconfig"
+    fi
+else
+    # Create .gitconfig with the include if it doesn't exist
+    echo -e "$INCLUDE_LINE" > "$TARGET_GITCONFIG"
+    echo ".gitconfig created with include"
+fi
+
+}
+
 function cleanup {
 	sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
 	unset installDependencies dotsUpdate syncDotfiles
@@ -69,6 +91,7 @@ installDependencies
 dotsUpdate
 
 syncDotfiles
+updateGitconfig
 source $HOME/.bash_profile
 
 source dotsInstallPackages
